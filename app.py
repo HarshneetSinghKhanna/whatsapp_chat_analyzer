@@ -39,7 +39,7 @@ if uploaded_file is not None:
         with col3:
          st.header("Total Media messages")
          st.title(num_media_messages)
-        with col3:
+        with col4:
          st.header("Total Links sent")
          st.title(num_links)    
 
@@ -61,5 +61,13 @@ if uploaded_file is not None:
 
 
         # WORDCLOUD
+        st.title("Word Cloud")
+        df_wc = helper.create_wordcloud(selected_user,df) 
+        fig,ax = plt.subplots()
+        plt.imshow(df_wc)
+        st.pyplot(fig)
 
-        
+        #most common words
+        st.title("Most Common Words")
+        most_common_df = helper.most_common_words(selected_user,df)
+        st.dataframe(most_common_df)
