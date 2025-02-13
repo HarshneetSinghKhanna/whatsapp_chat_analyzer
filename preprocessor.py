@@ -32,7 +32,7 @@ def preprocess(data):
             users.append(entry[0].strip())  # Username
             new_messages.append(entry[1].strip())  # Actual message
         else:
-            users.append("Group_Notification")
+            users.append("GroupNotification")
             new_messages.append(entry[0].strip())
 
     df['user'] = users
