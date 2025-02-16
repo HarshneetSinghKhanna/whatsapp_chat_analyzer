@@ -10,6 +10,12 @@ sticker
 video
 omitted
 media 
+image
+sticker
+{
+}
+[
+]
 1
 2
 3
