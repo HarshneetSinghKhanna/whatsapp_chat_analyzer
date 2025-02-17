@@ -12,13 +12,13 @@ def fetch_stats(selected_user, df):
     if selected_user != 'Overall':
         df = df[df['user'] == selected_user]
 
-    # Fetching number of messages
+  
     num_messages = df.shape[0]
 
-    # Counting words
+    
     words = df['message'].apply(lambda x: len(x.split())).sum()
 
-    # Counting media messages
+    
     num_media_messages = df[df['message'] == '<media omitted>\n'].shape[0]
 
     # no of linkss
@@ -111,12 +111,12 @@ def monthly_timeline(selected_user, df):
    
     df['year'] = df['date'].dt.year
     df['month_num'] = df['date'].dt.month
-    df['month'] = df['date'].dt.strftime('%b')  # Example: 'Jan', 'Feb', etc.
+    df['month'] = df['date'].dt.strftime('%b')  
 
-    # Group by year, month_num, and month
+    
     timeline = df.groupby(['year', 'month_num', 'month']).count()['message'].reset_index()
 
-    # Create a 'time' column in "Month-Year" format
+    
     timeline['time'] = timeline.apply(lambda row: f"{row['month']}-{row['year']}", axis=1)
 
     return timeline
