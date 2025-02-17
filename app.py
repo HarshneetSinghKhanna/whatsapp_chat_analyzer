@@ -27,7 +27,7 @@ if uploaded_file is not None:
 
     if st.sidebar.button("Show Analysis"):
         num_messages, words, num_media_messages,num_links = helper.fetch_stats(selected_user, df)
-
+        st.title("Top Statistics:")
         col1,col2,col3,col4 =  st.columns(4)
 
         with col1:
@@ -41,7 +41,17 @@ if uploaded_file is not None:
          st.title(num_media_messages)
         with col4:
          st.header("Total Links sent")
-         st.title(num_links)    
+         st.title(num_links)   
+
+         #timeline
+
+        st.title("Monthly Timeline")
+        timeline = helper.monthly_timeline(selected_user,df)
+        fig,ax =  plt.subplots() 
+        ax.plot(timeline['time'], timeline['message'])
+        plt.xticks(rotation = 'vertical', color = 'green')
+        plt.xticks(ticks=range(0, len(timeline['time']), 2), labels=timeline['time'][::2])
+        st.pyplot(fig)
 
         # finding busiest users on the group (group level)
         if selected_user == 'Overall':
@@ -73,8 +83,24 @@ if uploaded_file is not None:
         fig,ax = plt.subplots()
         ax.barh(most_common_df[0] , most_common_df[1])
         plt.xticks(rotation = 'vertical')
-        st.title("Most Common Words")
+        
         st.pyplot(fig)
 
 
         st.dataframe(most_common_df)
+
+        # emoji anaysis (most used waale)
+
+        emoji_df = helper.emoji_helper(selected_user,df)
+        
+        st.title("Most Emojis Used")
+
+        col1,col2 = st.columns(2)
+
+        with col1:
+            st.dataframe(emoji_df)
+
+        with col2:
+           fig,ax = plt.subplots()
+           ax.pie( emoji_df[1].head(), labels = emoji_df[0].head(), autopct = "%0.2f")
+           st.pyplot(fig)
